@@ -1,11 +1,11 @@
 
 
-# Fluid Circuit Generator
+# Fluidic Circuit Generator
 
-This prject is a Blender addon tool to help design Fluidic Networks.
+This project is a Blender addon tool to help design Fluidic Networks.
 
 The software is designed to be part of a workflow for fabrication of macro-fluidic circuits. 
-Where, instead of manually wiring logic components, designers can feed their design into the software and generate the connections among as a 3D printable fluidic network model.
+Where, instead of manually wiring logic components, designers can feed their design into the software and generate the tubing network among as a 3D printable fluidic network model.
 The logic components can be put onto the network to form a functional fluidic circuit. (shown below)
 
 A video tutorial for using the software can be found
