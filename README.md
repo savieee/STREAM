@@ -1,6 +1,6 @@
 
 
-# Fluidic Circuit Generator
+# STREAM : A software tool to auto-generate fluidic routing
 
 
 This project is a Blender addon tool designed to help create Fluidic Networks.
