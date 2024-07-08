@@ -3,7 +3,7 @@ Manage the whole Assembly including Logic Gates and Pipe System
 Handles high level analysis and claculations like propagation delay
 Keeps track of gates, connections, and check for duplicates
 """
-
+#checking if the commits are working
 
 import json
 import os
