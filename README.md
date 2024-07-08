@@ -13,11 +13,6 @@ A video tutorial for using the software can be found
 
 ![](pictures/process.png)
 
-
-## Author
-[Lehong Wang](https://github.com/Lehong-Wang) \
-If you like this work, interested in more up-to-date versions, or would like to provide feedback, please check out the [original project repo](https://github.com/Lehong-Wang/Fluid-Circuit-Generator).
-
 ## Requirements
 
 * [Blender version 3.2](https://download.blender.org/release/Blender3.2/)
