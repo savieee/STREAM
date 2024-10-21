@@ -1268,8 +1268,8 @@ class MESH_OT_calculate_propegation_delay(bpy.types.Operator):
   Calculate propegation delay between two given ports
   This method also calls the assembly class
   """
-  bl_idname = "mesh.calculate_propegation_delay"
-  bl_label = "Calculate Propegation Delay"
+  bl_idname = "mesh.calculate_propgation_delay"
+  bl_label = "Calculate Propogation Delay"
 
   # propegation_delay: bpy.props.FloatProperty(default=0)
   propegation_delay = 0
@@ -2143,8 +2143,8 @@ class VIEW3D_PT_calculate_propergation_delay_panel(bpy.types.Panel):
 
     button_row = layout.row()
     button_row.operator("mesh.calculate_propegation_delay")
-    delay = getattr(ui_prop, "propegation_delay")
-    button_row.label(text=f"Propegation Delay:      {round(delay,4)} s")
+    delay = getattr(ui_prop, "propogation_delay")
+    button_row.label(text=f"Propogation Delay:      {round(delay,4)} s")
 
 
 
