@@ -1220,7 +1220,7 @@ class MESH_OT_delete_preview_connection(bpy.types.Operator):
 
 class MESH_OT_choose_propergation_port(bpy.types.Operator):
   """
-  Generic button to choose a port for calculate propegation delay
+  Generic button to choose a port for calculate propogation delay
   Pass in different arguments for different ports
   """
   bl_idname = "mesh.choose_propergation_port"
@@ -1278,7 +1278,7 @@ class MESH_OT_calculate_propegation_delay(bpy.types.Operator):
   This method also calls the assembly class
   """
   bl_idname = "mesh.calculate_propegation_delay"
-  bl_label = "Calculate Propegation Delay"
+  bl_label = "Calculate Propogation Delay"
 
   # propegation_delay: bpy.props.FloatProperty(default=0)
   propegation_delay = 0
@@ -2221,7 +2221,7 @@ class VIEW3D_PT_calculate_propergation_delay_panel(bpy.types.Panel):
   bl_space_type = 'VIEW_3D'
   bl_region_type = 'UI'
   bl_category = ADDON_PANNEL_LABEL
-  bl_label = "Calculate Propergation Delay"
+  bl_label = "Calculate Propogation Delay"
   # bl_options = {'DEFAULT_CLOSED'}
 
   def draw(self, context):
