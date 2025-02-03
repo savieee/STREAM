@@ -16,13 +16,13 @@ import fluid_circuit_generator.ui_component
 
 bl_info = {
   "name": "Fluid Circuit Generator",
-  "author": "Savita Kendre and Lehong Wang",
+  "author": "Lehong Wang",
   "version": (1, 0),
-  "blender": (3, 2, 0),
+  "blender": (4, 3, 1),
   "location": "SpaceBar Search -> Add-on Preferences Example",
   "description": "This addon can help with auto generating 3D-printable fluid circuits.",
   "warning": "",
-  "doc_url": "https://github.com/savieee/FCB-design-software",
+  "doc_url": "https://github.com/Lehong-Wang/Fluid-Circuit-Generator",
   "tracker_url": "",
   "category": "Mesh",
 }

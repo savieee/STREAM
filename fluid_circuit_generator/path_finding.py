@@ -116,13 +116,24 @@ class Node:
 
   # max will make it go cross first, then straight (gather same direction segment)
   # plus some real distance so it head toward the target
-  def calculate_H(self, dest_node):
+  #def calculate_H(self, dest_node):
     """Helper Function"""
     x1,y1,z1 = self.coord
     x2,y2,z2 = dest_node.coord
     dest_h = max(abs(x1-x2), abs(y1-y2), abs(z1-z2)) + 0.4*(self.square_root(self.coord, dest_node.coord))
     # dest_h = max(abs(x1-x2), abs(y1-y2), abs(z1-z2)) + 0.1*(self.square_root(self.coord, dest_node.coord))
     return dest_h
+  
+  #SK: make chnages to the cost function
+
+  def calculate_H(self, dest_node):
+    """Helper Function: Prefer Manhattan Distance for straight paths."""
+    x1, y1, z1 = self.coord
+    x2, y2, z2 = dest_node.coord
+
+    # Manhattan distance
+    return abs(x1 - x2) + abs(y1 - y2) + abs(z1 - z2)
+
 
   # return if G is updated (decreased)
   def update_G(self, from_node):
@@ -153,7 +164,7 @@ class Node:
     return
 
   # reward for heading down and staying on the bottom
-  def get_from_dis(self, from_node):
+ # def get_from_dis(self, from_node):
     """Helper Function"""
     # 1 -> 2, from -> this
     x1,y1,z1 = from_node.coord
@@ -165,6 +176,29 @@ class Node:
     if z2 == 0:
       dis -= .1
     return dis
+  
+  #updated python:SK
+
+  def get_from_dis(self, from_node):
+    """Helper Function: Penalize diagonal moves."""
+    x1, y1, z1 = from_node.coord
+    x2, y2, z2 = self.coord
+
+    # Check movement direction
+    dx = abs(x1 - x2)
+    dy = abs(y1 - y2)
+    dz = abs(z1 - z2)
+
+    # Assign higher cost for diagonal movement
+    if dx + dy + dz == 1:  # Straight move
+        return 1.0
+    elif dx + dy + dz == 2:  # Simple diagonal move
+        return 1.4  # Slightly more costly than straight
+    elif dx + dy + dz == 3:  # 3D diagonal move
+        return 1.7  # Even more costly
+
+    return float('inf')  # Invalid move
+
 
   # add node to blocked_neighbors list
   def add_block_neighbors(self, neighbor):
@@ -226,6 +260,9 @@ class Grid:
     self.node_grid = []
     self.node_grid = self.make_grid()
 
+    # store all the nodes that are ocupied by obstacles
+    # [node_list]
+    self.obsticales = []
     # store all the ground paths
     # only ground path can merge together
     # {(start_node, end_node) : [path_node_list]}
@@ -361,7 +398,11 @@ class Grid:
       this_saved_path = value[2]
       for node in this_saved_path:
         node.visited = True
-
+    
+    print("Registered node as obstacle:")
+    for node in self.obsticales:
+      node.visited = True
+      print(node.coord)
     self.cut_all_crossover()
     print("Grid Reset")
 
@@ -804,6 +845,7 @@ class Grid:
     Wrapper function used for connecting two grid coordinates
     Use this for creating connections / find paths
     """
+    self.reset_grid()
     print(f"\nConnecting Node {start_coord} and Node {end_coord} with default path")
     start_node = self.node_grid[start_coord[0]][start_coord[1]][start_coord[2]]
     end_node = self.node_grid[end_coord[0]][end_coord[1]][end_coord[2]]
@@ -866,6 +908,20 @@ class Grid:
       print(f"Error: Node {coord} is out of bound")
       return True
     return node.visited
+
+
+
+  def make_obstacle(self, coord):
+    """Helper Function"""
+    try:
+      node = self.node_grid[coord[0]][coord[1]][coord[2]]
+      self.obsticales.append(node)
+      # node.visited = True
+    except IndexError:
+      print(f"Error: Node {coord} is out of bound")
+      return False
+    return True
+
 
   # given a node, return the ground node
   def find_ground_node(self, node, dir_x, dir_y):
@@ -958,8 +1014,12 @@ class Grid:
   def smooth_out_path(self):
     """Smooth the path a bit"""
     for key,value in self.connection_dict.items():
+
       this_path = value
       to_remove_list = []
+      # remove redundent path if arrive at destination in the middle
+      idx = this_path.index(this_path[-1])
+      this_path = this_path[:idx+1]
       for i,node in enumerate(this_path[1:-1]):
         last_node = this_path[i]
         next_node = this_path[i+2]

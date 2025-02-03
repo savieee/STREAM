@@ -57,7 +57,7 @@ class PipeSystem:
     self.warning_message_list = []
 
 
-  def reset_grid(self, grid_dimention=None, pipe_dimention=None, unit_dimention=None, tip_length=None):
+  def reset_grid(self, grid_dimention=None, pipe_dimention=None, unit_dimention=None, tip_length=None, obstacles=None):
     """Top level function to Addjust dimentions of the grid and pipe system"""
     if grid_dimention is not None:
       self.grid_dimention = grid_dimention
@@ -68,6 +68,8 @@ class PipeSystem:
     if tip_length is not None:
       self.tip_length = tip_length
     self.__init__()
+    for coord in obstacles:
+      self.grid.make_obstacle(coord)
     print(f"Pipe System Reset with grid_dimention={self.grid_dimention}, pipe_dimention={self.pipe_dimention}, unit_dimention={self.unit_dimention}, tip_length={self.tip_length}")
 
 
@@ -85,6 +87,8 @@ class PipeSystem:
 
     print("\n")
     print(f"Connecting Ports {start_port_coord} - {end_port_coord}")
+    # start_tip_coord = (start_port_coord[0], start_port_coord[1], start_port_coord[2]-self.tip_length)
+    # end_tip_coord = (end_port_coord[0], end_port_coord[1], end_port_coord[2]-self.tip_length)
     start_tip_coord = (start_port_coord[0], start_port_coord[1], start_port_coord[2]-self.tip_length)
     end_tip_coord = (end_port_coord[0], end_port_coord[1], end_port_coord[2]-self.tip_length)
 
@@ -441,7 +445,8 @@ class PipeSystem:
   def make_fillet(self, coord_list):
     """Make fillet in pipe for turns < 120 degrees"""
     new_coord_list = []
-    fillet_size = .7 * (self.pipe_dimention[0] + self.pipe_dimention[1])
+    fillet_size = 1 * (self.pipe_dimention[0] + self.pipe_dimention[1])
+    # fillet_size = .7 * (self.pipe_dimention[0] + self.pipe_dimention[1])
 
     for i, this_coord in enumerate(coord_list):
       if (i == 0 or i == len(coord_list) - 1):
@@ -461,7 +466,8 @@ class PipeSystem:
         cos = dot_product / (l_v1 * l_v2)
 
         # angle > 120 or too close together
-        if cos < -.5 or min(l_v1, l_v2) < 2 * fillet_size:
+        if cos < -.5 or min(l_v1, l_v2) <  fillet_size:
+        # if cos < -.5 or min(l_v1, l_v2) < 2 * fillet_size:
           new_coord_list.append(this_coord)
         else:
           d1 = tuple(map(lambda a: a/l_v1*fillet_size, v1))
