@@ -16,7 +16,7 @@ import fluid_circuit_generator.ui_component
 
 bl_info = {
   "name": "Fluid Circuit Generator",
-  "author": "Lehong Wang",
+  "author": "Lehong Wang and Savita Kendre",
   "version": (1, 0),
   "blender": (4, 3, 1),
   "location": "SpaceBar Search -> Add-on Preferences Example",
